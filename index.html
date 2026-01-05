@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Registro de Envíos - AROMAKER</title>
     <style>
         * {
@@ -15,41 +15,43 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding-bottom: 100px;
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            overflow: hidden;
+            min-height: 100vh;
         }
 
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
+            padding: 20px;
             text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .header h1 {
-            font-size: 28px;
+            font-size: 24px;
             margin-bottom: 5px;
         }
 
         .header p {
             opacity: 0.9;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .form-container {
-            padding: 30px;
+            padding: 20px;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         label {
@@ -66,7 +68,6 @@
         }
 
         input[type="text"],
-        input[type="number"],
         select,
         textarea {
             width: 100%;
@@ -104,92 +105,109 @@
             flex: 2;
         }
 
-        .photo-upload {
-            border: 2px dashed #d0d0d0;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: #fafafa;
+        .photo-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
         }
 
-        .photo-upload:hover {
-            border-color: #667eea;
-            background: #f5f7ff;
-        }
-
-        .photo-upload.dragover {
-            border-color: #667eea;
-            background: #e8ebff;
-        }
-
-        .photo-icon {
-            font-size: 48px;
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-
-        .photo-text {
-            color: #666;
+        .photo-label {
             font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            display: block;
         }
 
-        .photo-count {
-            margin-top: 10px;
-            font-size: 12px;
-            color: #999;
-        }
-
-        .photo-preview {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .photo-item {
+        .photo-input-wrapper {
             position: relative;
+            margin-bottom: 15px;
+        }
+
+        .photo-btn {
+            width: 100%;
+            padding: 15px;
+            background: white;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            color: #667eea;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .photo-btn:active {
+            transform: scale(0.98);
+        }
+
+        .photo-btn.has-photo {
+            background: #e8f5e9;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+
+        .photo-input {
+            display: none;
+        }
+
+        .photo-preview-item {
+            position: relative;
+            margin-top: 10px;
             border-radius: 8px;
             overflow: hidden;
-            aspect-ratio: 1;
             border: 2px solid #e0e0e0;
         }
 
-        .photo-item img {
+        .photo-preview-item img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            display: block;
         }
 
         .photo-remove {
             position: absolute;
-            top: 5px;
-            right: 5px;
+            top: 10px;
+            right: 10px;
             background: rgba(231, 76, 60, 0.9);
             color: white;
             border: none;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
             line-height: 1;
             transition: all 0.2s;
+            font-weight: bold;
         }
 
-        .photo-remove:hover {
+        .photo-remove:active {
             background: #c0392b;
             transform: scale(1.1);
         }
 
-        .button-group {
+        .sticky-button-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 99;
             display: flex;
             gap: 10px;
-            margin-top: 30px;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        button {
+        .btn-reset {
             flex: 1;
             padding: 15px;
             border: none;
@@ -197,32 +215,35 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
+            background: #ecf0f1;
+            color: #7f8c8d;
             transition: all 0.3s;
         }
 
-        .btn-submit {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        .btn-reset:active {
+            background: #d5dbdc;
         }
 
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        .btn-submit {
+            flex: 2;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
         }
 
         .btn-submit:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-reset {
-            background: #ecf0f1;
-            color: #7f8c8d;
-        }
-
-        .btn-reset:hover {
-            background: #d5dbdc;
         }
 
         .alert {
@@ -287,13 +308,16 @@
             color: #2c3e50;
         }
 
+        .photo-counter {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            margin-top: 10px;
+        }
+
         @media (max-width: 600px) {
             .form-container {
-                padding: 20px;
-            }
-
-            .button-group {
-                flex-direction: column;
+                padding: 15px;
             }
 
             .ejecutor-group {
@@ -317,7 +341,7 @@
             </div>
 
             <div class="info-box">
-                <strong>ℹ️ Información:</strong> La fecha y hora se registran automáticamente. Todos los campos son obligatorios excepto las fotos (mínimo 1, máximo 5).
+                <strong>ℹ️ Información:</strong> La fecha y hora se registran automáticamente. Mínimo 1 foto requerida, máximo 5 fotos.
             </div>
 
             <form id="registroForm">
@@ -359,37 +383,73 @@
                     <input type="text" id="comuna" required placeholder="Comuna de entrega">
                 </div>
 
-                <div class="form-group">
-                    <label>Fotos (Mínimo 1, Máximo 5) <span class="required">*</span></label>
-                    <div class="photo-upload" id="photoUpload">
-                        <div class="photo-icon">📷</div>
-                        <div class="photo-text">
-                            <strong>Click aquí o arrastra fotos</strong><br>
-                            Formatos: JPG, PNG (Max 5MB c/u)
-                        </div>
-                        <div class="photo-count" id="photoCount">0 / 5 fotos</div>
-                        <input type="file" id="photoInput" accept="image/jpeg,image/png,image/jpg" multiple style="display:none;">
+                <div class="photo-section">
+                    <label class="photo-label">📷 Fotos del Envío <span class="required">*</span></label>
+                    <p style="font-size: 12px; color: #666; margin-bottom: 15px;">Mínimo 1 foto, máximo 5 fotos. Usa la cámara o selecciona desde galería.</p>
+                    
+                    <div class="photo-input-wrapper">
+                        <button type="button" class="photo-btn" id="photoBtn1" onclick="document.getElementById('photoInput1').click()">
+                            <span>📷</span>
+                            <span>Foto 1 (Requerida)</span>
+                        </button>
+                        <input type="file" id="photoInput1" class="photo-input" accept="image/*" capture="environment">
+                        <div id="photoPreview1"></div>
                     </div>
-                    <div class="photo-preview" id="photoPreview"></div>
-                </div>
 
-                <div class="button-group">
-                    <button type="button" class="btn-reset" onclick="resetForm()">🔄 Limpiar</button>
-                    <button type="submit" class="btn-submit">💾 Guardar Registro</button>
+                    <div class="photo-input-wrapper">
+                        <button type="button" class="photo-btn" id="photoBtn2" onclick="document.getElementById('photoInput2').click()">
+                            <span>📷</span>
+                            <span>Foto 2 (Opcional)</span>
+                        </button>
+                        <input type="file" id="photoInput2" class="photo-input" accept="image/*" capture="environment">
+                        <div id="photoPreview2"></div>
+                    </div>
+
+                    <div class="photo-input-wrapper">
+                        <button type="button" class="photo-btn" id="photoBtn3" onclick="document.getElementById('photoInput3').click()">
+                            <span>📷</span>
+                            <span>Foto 3 (Opcional)</span>
+                        </button>
+                        <input type="file" id="photoInput3" class="photo-input" accept="image/*" capture="environment">
+                        <div id="photoPreview3"></div>
+                    </div>
+
+                    <div class="photo-input-wrapper">
+                        <button type="button" class="photo-btn" id="photoBtn4" onclick="document.getElementById('photoInput4').click()">
+                            <span>📷</span>
+                            <span>Foto 4 (Opcional)</span>
+                        </button>
+                        <input type="file" id="photoInput4" class="photo-input" accept="image/*" capture="environment">
+                        <div id="photoPreview4"></div>
+                    </div>
+
+                    <div class="photo-input-wrapper">
+                        <button type="button" class="photo-btn" id="photoBtn5" onclick="document.getElementById('photoInput5').click()">
+                            <span>📷</span>
+                            <span>Foto 5 (Opcional)</span>
+                        </button>
+                        <input type="file" id="photoInput5" class="photo-input" accept="image/*" capture="environment">
+                        <div id="photoPreview5"></div>
+                    </div>
+
+                    <div class="photo-counter" id="photoCounter">0 / 5 fotos</div>
                 </div>
             </form>
         </div>
     </div>
 
+    <div class="sticky-button-container">
+        <button type="button" class="btn-reset" onclick="resetForm()">🔄 Limpiar</button>
+        <button type="button" class="btn-submit" id="submitBtn" onclick="submitForm()">💾 Guardar Registro</button>
+    </div>
+
     <script>
-        let selectedPhotos = [];
-        const MAX_PHOTOS = 5;
-        const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-
-        // Web App URL de Google Apps Script
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw51h2sFM4WbkyM2RZFyu8TRE2vqLIhGExJJuoTW2kjFVJFH69nSSVbcD502u3wayiESQ/exec';
+        
+        const MAX_PHOTOS = 5;
+        const MAX_FILE_SIZE = 5 * 1024 * 1024;
+        let photoFiles = [null, null, null, null, null];
 
-        // Manejo del selector de ejecutor
         document.getElementById('ejecutorSelect').addEventListener('change', function() {
             const otroInput = document.getElementById('ejecutorOtro');
             if (this.value === 'OTRO') {
@@ -402,85 +462,77 @@
             }
         });
 
-        // Manejo de fotos
-        const photoUpload = document.getElementById('photoUpload');
-        const photoInput = document.getElementById('photoInput');
-        const photoPreview = document.getElementById('photoPreview');
-        const photoCount = document.getElementById('photoCount');
-
-        photoUpload.addEventListener('click', () => photoInput.click());
-        photoInput.addEventListener('change', handleFiles);
-
-        // Drag and drop
-        photoUpload.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            photoUpload.classList.add('dragover');
-        });
-
-        photoUpload.addEventListener('dragleave', () => {
-            photoUpload.classList.remove('dragover');
-        });
-
-        photoUpload.addEventListener('drop', (e) => {
-            e.preventDefault();
-            photoUpload.classList.remove('dragover');
-            handleFiles({ target: { files: e.dataTransfer.files } });
-        });
-
-        function handleFiles(e) {
-            const files = Array.from(e.target.files);
-            
-            for (let file of files) {
-                if (selectedPhotos.length >= MAX_PHOTOS) {
-                    showAlert('Solo puedes subir máximo ' + MAX_PHOTOS + ' fotos', 'error');
-                    break;
-                }
-
-                if (file.size > MAX_FILE_SIZE) {
-                    showAlert(`La foto "${file.name}" excede el tamaño máximo de 5MB`, 'error');
-                    continue;
-                }
-
-                if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
-                    showAlert(`La foto "${file.name}" debe ser JPG o PNG`, 'error');
-                    continue;
-                }
-
-                selectedPhotos.push(file);
-            }
-
-            updatePhotoPreview();
-            photoInput.value = '';
-        }
-
-        function updatePhotoPreview() {
-            photoPreview.innerHTML = '';
-            photoCount.textContent = `${selectedPhotos.length} / ${MAX_PHOTOS} fotos`;
-
-            selectedPhotos.forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const div = document.createElement('div');
-                    div.className = 'photo-item';
-                    div.innerHTML = `
-                        <img src="${e.target.result}" alt="Foto ${index + 1}">
-                        <button type="button" class="photo-remove" onclick="removePhoto(${index})">×</button>
-                    `;
-                    photoPreview.appendChild(div);
-                };
-                reader.readAsDataURL(file);
+        for (let i = 1; i <= MAX_PHOTOS; i++) {
+            const input = document.getElementById(`photoInput${i}`);
+            input.addEventListener('change', function(e) {
+                handlePhotoChange(e, i);
             });
         }
 
-        function removePhoto(index) {
-            selectedPhotos.splice(index, 1);
-            updatePhotoPreview();
+        function handlePhotoChange(e, photoIndex) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (file.size > MAX_FILE_SIZE) {
+                showAlert('La foto excede el tamaño máximo de 5MB', 'error');
+                e.target.value = '';
+                return;
+            }
+
+            if (!file.type.match('image/jpeg') && !file.type.match('image/png') && !file.type.match('image/jpg')) {
+                showAlert('Solo se permiten archivos JPG o PNG', 'error');
+                e.target.value = '';
+                return;
+            }
+
+            photoFiles[photoIndex - 1] = file;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const preview = document.getElementById(`photoPreview${photoIndex}`);
+                preview.innerHTML = `
+                    <div class="photo-preview-item">
+                        <img src="${event.target.result}" alt="Foto ${photoIndex}">
+                        <button type="button" class="photo-remove" onclick="removePhoto(${photoIndex})">×</button>
+                    </div>
+                `;
+
+                const btn = document.getElementById(`photoBtn${photoIndex}`);
+                btn.classList.add('has-photo');
+                btn.innerHTML = `<span>✓</span><span>Foto ${photoIndex} Lista</span>`;
+            };
+            reader.readAsDataURL(file);
+
+            updatePhotoCounter();
+        }
+
+        function removePhoto(photoIndex) {
+            photoFiles[photoIndex - 1] = null;
+            document.getElementById(`photoInput${photoIndex}`).value = '';
+            document.getElementById(`photoPreview${photoIndex}`).innerHTML = '';
+            
+            const btn = document.getElementById(`photoBtn${photoIndex}`);
+            btn.classList.remove('has-photo');
+            const label = photoIndex === 1 ? '(Requerida)' : '(Opcional)';
+            btn.innerHTML = `<span>📷</span><span>Foto ${photoIndex} ${label}</span>`;
+
+            updatePhotoCounter();
+        }
+
+        function updatePhotoCounter() {
+            const count = photoFiles.filter(f => f !== null).length;
+            document.getElementById('photoCounter').textContent = `${count} / ${MAX_PHOTOS} fotos`;
         }
 
         function resetForm() {
+            if (!confirm('¿Seguro que quieres limpiar el formulario?')) return;
+            
             document.getElementById('registroForm').reset();
-            selectedPhotos = [];
-            updatePhotoPreview();
+            
+            for (let i = 1; i <= MAX_PHOTOS; i++) {
+                removePhoto(i);
+            }
+            
             document.getElementById('ejecutorOtro').style.display = 'none';
             hideAlert();
         }
@@ -494,13 +546,14 @@
             if (type === 'success') {
                 setTimeout(() => hideAlert(), 5000);
             }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function hideAlert() {
             document.getElementById('alertBox').style.display = 'none';
         }
 
-        // Convertir imagen a Base64
         function fileToBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -510,17 +563,14 @@
             });
         }
 
-        // Enviar formulario
-        document.getElementById('registroForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+        async function submitForm() {
+            hideAlert();
 
-            // Validar fotos
-            if (selectedPhotos.length === 0) {
-                showAlert('Debes subir al menos 1 foto', 'error');
+            if (!photoFiles[0]) {
+                showAlert('Debes subir al menos la Foto 1', 'error');
                 return;
             }
 
-            // Obtener ejecutor
             const ejecutorSelect = document.getElementById('ejecutorSelect').value;
             let ejecutor;
             if (ejecutorSelect === 'OTRO') {
@@ -529,11 +579,24 @@
                     showAlert('Debes escribir el nombre del ejecutor', 'error');
                     return;
                 }
+            } else if (!ejecutorSelect) {
+                showAlert('Debes seleccionar un ejecutor', 'error');
+                return;
             } else {
                 ejecutor = ejecutorSelect;
             }
 
-            // Obtener fecha y hora actual
+            const canal = document.getElementById('canal').value;
+            const numeroVenta = document.getElementById('numeroVenta').value;
+            const destinatario = document.getElementById('destinatario').value;
+            const direccion = document.getElementById('direccion').value;
+            const comuna = document.getElementById('comuna').value;
+
+            if (!canal || !numeroVenta || !destinatario || !direccion || !comuna) {
+                showAlert('Todos los campos son obligatorios', 'error');
+                return;
+            }
+
             const now = new Date();
             const fecha = now.toLocaleString('es-CL', { 
                 timeZone: 'America/Santiago',
@@ -548,32 +611,31 @@
 
             try {
                 document.getElementById('loadingBox').style.display = 'block';
-                document.querySelector('.btn-submit').disabled = true;
+                document.getElementById('submitBtn').disabled = true;
 
-                // Convertir fotos a Base64
                 const fotosBase64 = [];
-                for (let photo of selectedPhotos) {
-                    const base64 = await fileToBase64(photo);
-                    fotosBase64.push({
-                        name: photo.name,
-                        data: base64,
-                        mimeType: photo.type
-                    });
+                for (let i = 0; i < MAX_PHOTOS; i++) {
+                    if (photoFiles[i]) {
+                        const base64 = await fileToBase64(photoFiles[i]);
+                        fotosBase64.push({
+                            name: photoFiles[i].name,
+                            data: base64,
+                            mimeType: photoFiles[i].type
+                        });
+                    }
                 }
 
-                // Preparar datos
                 const formData = {
                     fecha: fecha,
                     ejecutor: ejecutor,
-                    canal: document.getElementById('canal').value,
-                    numeroVenta: document.getElementById('numeroVenta').value,
-                    destinatario: document.getElementById('destinatario').value,
-                    direccion: document.getElementById('direccion').value,
-                    comuna: document.getElementById('comuna').value,
+                    canal: canal,
+                    numeroVenta: numeroVenta,
+                    destinatario: destinatario,
+                    direccion: direccion,
+                    comuna: comuna,
                     fotos: fotosBase64
                 };
 
-                // Enviar a Google Apps Script
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -583,8 +645,6 @@
                     body: JSON.stringify(formData)
                 });
 
-                // Como es no-cors, no podemos leer la respuesta
-                // Asumimos éxito si no hubo error
                 showAlert('✅ Registro guardado exitosamente', 'success');
                 resetForm();
 
@@ -593,9 +653,9 @@
                 showAlert('❌ Error al guardar: ' + error.message, 'error');
             } finally {
                 document.getElementById('loadingBox').style.display = 'none';
-                document.querySelector('.btn-submit').disabled = false;
+                document.getElementById('submitBtn').disabled = false;
             }
-        });
+        }
     </script>
 </body>
 </html>
