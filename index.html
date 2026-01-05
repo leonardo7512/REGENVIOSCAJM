@@ -5,377 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Registro de Envíos - AROMAKER</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding-bottom: 100px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            min-height: 100vh;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-
-        .header p {
-            opacity: 0.9;
-            font-size: 13px;
-        }
-
-        .form-container {
-            padding: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-            font-size: 14px;
-        }
-
-        .required {
-            color: #e74c3c;
-            margin-left: 3px;
-        }
-
-        input[type="text"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s;
-            font-family: inherit;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .ejecutor-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .ejecutor-group select {
-            flex: 1;
-        }
-
-        .ejecutor-group input {
-            flex: 2;
-        }
-
-        .photo-section {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-
-        .photo-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .photo-input-wrapper {
-            position: relative;
-            margin-bottom: 15px;
-        }
-
-        .photo-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .photo-btn {
-            flex: 1;
-            padding: 12px;
-            background: white;
-            border: 2px solid #667eea;
-            border-radius: 8px;
-            color: #667eea;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.3s;
-        }
-
-        .photo-btn:active {
-            transform: scale(0.98);
-        }
-
-        .photo-btn.selected {
-            background: #e8f5e9;
-            border-color: #4caf50;
-            color: #2e7d32;
-        }
-
-        .photo-input {
-            display: none;
-        }
-
-        .photo-preview-item {
-            position: relative;
-            margin-top: 10px;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 2px solid #e0e0e0;
-        }
-
-        .photo-preview-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .photo-remove {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(231, 76, 60, 0.9);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            cursor: pointer;
-            font-size: 18px;
-            line-height: 1;
-            transition: all 0.2s;
-            font-weight: bold;
-        }
-
-        .photo-remove:active {
-            background: #c0392b;
-            transform: scale(1.1);
-        }
-
-        .sticky-button-container {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            padding: 15px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            z-index: 99;
-            display: flex;
-            gap: 10px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .btn-reset {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            background: #ecf0f1;
-            color: #7f8c8d;
-            transition: all 0.3s;
-        }
-
-        .btn-reset:active {
-            background: #d5dbdc;
-        }
-
-        .btn-submit {
-            flex: 2;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            transition: all 0.3s;
-        }
-
-        .btn-submit:active {
-            transform: scale(0.98);
-        }
-
-        .btn-submit:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .alert {
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: none;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .alert-warning {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeaa7;
-        }
-
-        .progress-container {
-            display: none;
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .progress-container.show {
-            display: block;
-        }
-
-        .progress-step {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 6px;
-            background: #f8f9fa;
-        }
-
-        .progress-step.active {
-            background: #e3f2fd;
-        }
-
-        .progress-step.completed {
-            background: #e8f5e9;
-        }
-
-        .progress-step.error {
-            background: #ffebee;
-        }
-
-        .progress-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 12px;
-            font-size: 18px;
-        }
-
-        .progress-text {
-            flex: 1;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .spinner-small {
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #667eea;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .info-box {
-            background: #e8f4f8;
-            border-left: 4px solid #3498db;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            font-size: 13px;
-            color: #2c3e50;
-        }
-
-        .photo-counter {
-            text-align: center;
-            font-size: 13px;
-            color: #666;
-            margin-top: 10px;
-        }
-
-        @media (max-width: 600px) {
-            .form-container {
-                padding: 15px;
-            }
-
-            .ejecutor-group {
-                flex-direction: column;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding-bottom: 100px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; min-height: 100vh; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .header h1 { font-size: 24px; margin-bottom: 5px; }
+        .header p { opacity: 0.9; font-size: 13px; }
+        .form-container { padding: 20px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; font-size: 14px; }
+        .required { color: #e74c3c; margin-left: 3px; }
+        input[type="text"], select, textarea { width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; transition: all 0.3s; font-family: inherit; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
+        textarea { resize: vertical; min-height: 80px; }
+        .ejecutor-group { display: flex; gap: 10px; }
+        .ejecutor-group select { flex: 1; }
+        .ejecutor-group input { flex: 2; }
+        .photo-section { background: #f8f9fa; border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+        .photo-label { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 10px; display: block; }
+        .photo-input-wrapper { position: relative; margin-bottom: 15px; }
+        .photo-buttons { display: flex; gap: 10px; margin-bottom: 10px; }
+        .photo-btn { flex: 1; padding: 12px; background: white; border: 2px solid #667eea; border-radius: 8px; color: #667eea; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.3s; }
+        .photo-btn:active { transform: scale(0.98); }
+        .photo-input { display: none; }
+        .photo-preview-item { position: relative; margin-top: 10px; border-radius: 8px; overflow: hidden; border: 2px solid #e0e0e0; }
+        .photo-preview-item img { width: 100%; height: auto; display: block; }
+        .photo-remove { position: absolute; top: 10px; right: 10px; background: rgba(231, 76, 60, 0.9); color: white; border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 18px; line-height: 1; transition: all 0.2s; font-weight: bold; }
+        .sticky-button-container { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 99; display: flex; gap: 10px; max-width: 800px; margin: 0 auto; }
+        .btn-reset { flex: 1; padding: 15px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; background: #ecf0f1; color: #7f8c8d; }
+        .btn-submit { flex: 2; padding: 15px; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+        .alert { padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; display: none; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .alert-warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .progress-container { display: none; background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .progress-container.show { display: block; }
+        .progress-step { display: flex; align-items: center; margin-bottom: 15px; padding: 10px; border-radius: 6px; background: #f8f9fa; }
+        .progress-step.active { background: #e3f2fd; }
+        .progress-step.completed { background: #e8f5e9; }
+        .progress-step.error { background: #ffebee; }
+        .progress-icon { width: 24px; height: 24px; margin-right: 12px; font-size: 18px; }
+        .spinner-small { border: 2px solid #f3f3f3; border-top: 2px solid #667eea; border-radius: 50%; width: 18px; height: 18px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .info-box { background: #e8f4f8; border-left: 4px solid #3498db; padding: 15px; border-radius: 5px; margin-bottom: 20px; font-size: 13px; color: #2c3e50; }
+        .photo-counter { text-align: center; font-size: 13px; color: #666; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -389,26 +64,14 @@
             <div id="alertBox" class="alert"></div>
             
             <div id="progressContainer" class="progress-container">
-                <div id="step1" class="progress-step">
-                    <div class="progress-icon">⏳</div>
-                    <div class="progress-text">Preparando datos...</div>
-                </div>
-                <div id="step2" class="progress-step">
-                    <div class="progress-icon">📤</div>
-                    <div class="progress-text">Subiendo fotos...</div>
-                </div>
-                <div id="step3" class="progress-step">
-                    <div class="progress-icon">💾</div>
-                    <div class="progress-text">Guardando en sistema...</div>
-                </div>
-                <div id="step4" class="progress-step">
-                    <div class="progress-icon">✅</div>
-                    <div class="progress-text">Completado</div>
-                </div>
+                <div id="step1" class="progress-step"><div class="progress-icon">⏳</div><div class="progress-text">Preparando datos...</div></div>
+                <div id="step2" class="progress-step"><div class="progress-icon">📤</div><div class="progress-text">Subiendo fotos...</div></div>
+                <div id="step3" class="progress-step"><div class="progress-icon">💾</div><div class="progress-text">Guardando en sistema...</div></div>
+                <div id="step4" class="progress-step"><div class="progress-icon">✅</div><div class="progress-text">Completado</div></div>
             </div>
 
             <div class="info-box">
-                <strong>ℹ️ Información:</strong> La fecha y hora se registran automáticamente. Mínimo 1 foto requerida, máximo 5 fotos.
+                <strong>ℹ️ Información:</strong> La fecha y hora se registran automáticamente.
             </div>
 
             <form id="registroForm">
@@ -437,118 +100,29 @@
 
                 <div class="form-group">
                     <label for="destinatario">Destinatario <span class="required">*</span></label>
-                    <input type="text" id="destinatario" required placeholder="Nombre completo del destinatario">
+                    <input type="text" id="destinatario" required placeholder="Nombre completo">
                 </div>
 
                 <div class="form-group">
                     <label for="direccion">Dirección <span class="required">*</span></label>
-                    <textarea id="direccion" required placeholder="Dirección completa de entrega"></textarea>
+                    <textarea id="direccion" required placeholder="Dirección completa"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="comuna">Comuna <span class="required">*</span></label>
-                    <input type="text" id="comuna" required placeholder="Comuna de entrega">
+                    <input type="text" id="comuna" required placeholder="Comuna">
                 </div>
 
                 <div class="form-group">
                     <label for="comentarios">Comentarios</label>
-                    <textarea id="comentarios" placeholder="Comentarios adicionales sobre el envío (opcional)" rows="3"></textarea>
+                    <textarea id="comentarios" placeholder="Opcional" rows="3"></textarea>
                 </div>
 
                 <div class="photo-section">
                     <label class="photo-label">📷 Fotos del Envío <span class="required">*</span></label>
-                    <p style="font-size: 12px; color: #666; margin-bottom: 15px;">Mínimo 1 foto, máximo 5 fotos.</p>
+                    <p style="font-size: 12px; color: #666; margin-bottom: 15px;">Mínimo 1 foto, máximo 5.</p>
                     
-                    <!-- Foto 1 -->
-                    <div class="photo-input-wrapper">
-                        <label style="font-size: 13px; margin-bottom: 8px;">Foto 1 (Requerida)</label>
-                        <div class="photo-buttons">
-                            <button type="button" class="photo-btn" onclick="openGallery(1)">
-                                <span>🖼️</span>
-                                <span>Galería</span>
-                            </button>
-                            <button type="button" class="photo-btn" onclick="openCamera(1)">
-                                <span>📷</span>
-                                <span>Cámara</span>
-                            </button>
-                        </div>
-                        <input type="file" id="photoInputGallery1" class="photo-input" accept="image/*">
-                        <input type="file" id="photoInputCamera1" class="photo-input" accept="image/*" capture="environment">
-                        <div id="photoPreview1"></div>
-                    </div>
-
-                    <!-- Foto 2 -->
-                    <div class="photo-input-wrapper">
-                        <label style="font-size: 13px; margin-bottom: 8px;">Foto 2 (Opcional)</label>
-                        <div class="photo-buttons">
-                            <button type="button" class="photo-btn" onclick="openGallery(2)">
-                                <span>🖼️</span>
-                                <span>Galería</span>
-                            </button>
-                            <button type="button" class="photo-btn" onclick="openCamera(2)">
-                                <span>📷</span>
-                                <span>Cámara</span>
-                            </button>
-                        </div>
-                        <input type="file" id="photoInputGallery2" class="photo-input" accept="image/*">
-                        <input type="file" id="photoInputCamera2" class="photo-input" accept="image/*" capture="environment">
-                        <div id="photoPreview2"></div>
-                    </div>
-
-                    <!-- Foto 3 -->
-                    <div class="photo-input-wrapper">
-                        <label style="font-size: 13px; margin-bottom: 8px;">Foto 3 (Opcional)</label>
-                        <div class="photo-buttons">
-                            <button type="button" class="photo-btn" onclick="openGallery(3)">
-                                <span>🖼️</span>
-                                <span>Galería</span>
-                            </button>
-                            <button type="button" class="photo-btn" onclick="openCamera(3)">
-                                <span>📷</span>
-                                <span>Cámara</span>
-                            </button>
-                        </div>
-                        <input type="file" id="photoInputGallery3" class="photo-input" accept="image/*">
-                        <input type="file" id="photoInputCamera3" class="photo-input" accept="image/*" capture="environment">
-                        <div id="photoPreview3"></div>
-                    </div>
-
-                    <!-- Foto 4 -->
-                    <div class="photo-input-wrapper">
-                        <label style="font-size: 13px; margin-bottom: 8px;">Foto 4 (Opcional)</label>
-                        <div class="photo-buttons">
-                            <button type="button" class="photo-btn" onclick="openGallery(4)">
-                                <span>🖼️</span>
-                                <span>Galería</span>
-                            </button>
-                            <button type="button" class="photo-btn" onclick="openCamera(4)">
-                                <span>📷</span>
-                                <span>Cámara</span>
-                            </button>
-                        </div>
-                        <input type="file" id="photoInputGallery4" class="photo-input" accept="image/*">
-                        <input type="file" id="photoInputCamera4" class="photo-input" accept="image/*" capture="environment">
-                        <div id="photoPreview4"></div>
-                    </div>
-
-                    <!-- Foto 5 -->
-                    <div class="photo-input-wrapper">
-                        <label style="font-size: 13px; margin-bottom: 8px;">Foto 5 (Opcional)</label>
-                        <div class="photo-buttons">
-                            <button type="button" class="photo-btn" onclick="openGallery(5)">
-                                <span>🖼️</span>
-                                <span>Galería</span>
-                            </button>
-                            <button type="button" class="photo-btn" onclick="openCamera(5)">
-                                <span>📷</span>
-                                <span>Cámara</span>
-                            </button>
-                        </div>
-                        <input type="file" id="photoInputGallery5" class="photo-input" accept="image/*">
-                        <input type="file" id="photoInputCamera5" class="photo-input" accept="image/*" capture="environment">
-                        <div id="photoPreview5"></div>
-                    </div>
-
+                    <div id="photoInputsContainer"></div>
                     <div class="photo-counter" id="photoCounter">0 / 5 fotos</div>
                 </div>
             </form>
@@ -561,279 +135,175 @@
     </div>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw1_bSZgificwzDjCvr7sTcO4Cy97j5VtbOVvYc1Dco181l2SC4s_OMoN4l27DEQ98pRg/exec';
+        // ==========================================
+        // ⚠️ PEGA AQUÍ TU URL NUEVA DE APPS SCRIPT
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw51h2sFM4WbkyM2RZFyu8TRE2vqLIhGExJJuoTW2kjFVJFH69nSSVbcD502u3wayiESQ/exec';
+        // ==========================================
         
         const MAX_PHOTOS = 5;
         const MAX_FILE_SIZE = 5 * 1024 * 1024;
         let photoFiles = [null, null, null, null, null];
 
+        // Generar inputs de fotos dinámicamente
+        const container = document.getElementById('photoInputsContainer');
+        for (let i = 1; i <= MAX_PHOTOS; i++) {
+            const div = document.createElement('div');
+            div.className = 'photo-input-wrapper';
+            div.innerHTML = `
+                <label style="font-size: 13px; margin-bottom: 8px;">Foto ${i} ${i===1 ? '(Requerida)' : '(Opcional)'}</label>
+                <div class="photo-buttons">
+                    <button type="button" class="photo-btn" onclick="document.getElementById('photoInputGallery${i}').click()">🖼️ Galería</button>
+                    <button type="button" class="photo-btn" onclick="document.getElementById('photoInputCamera${i}').click()">📷 Cámara</button>
+                </div>
+                <input type="file" id="photoInputGallery${i}" class="photo-input" accept="image/*" onchange="handlePhotoChange(event, ${i})">
+                <input type="file" id="photoInputCamera${i}" class="photo-input" accept="image/*" capture="environment" onchange="handlePhotoChange(event, ${i})">
+                <div id="photoPreview${i}"></div>
+            `;
+            container.appendChild(div);
+        }
+
         document.getElementById('ejecutorSelect').addEventListener('change', function() {
             const otroInput = document.getElementById('ejecutorOtro');
-            if (this.value === 'OTRO') {
-                otroInput.style.display = 'block';
-                otroInput.required = true;
-            } else {
-                otroInput.style.display = 'none';
-                otroInput.required = false;
-                otroInput.value = '';
-            }
+            otroInput.style.display = this.value === 'OTRO' ? 'block' : 'none';
+            otroInput.required = this.value === 'OTRO';
+            if (this.value !== 'OTRO') otroInput.value = '';
         });
 
-        function openGallery(photoIndex) {
-            document.getElementById(`photoInputGallery${photoIndex}`).click();
-        }
-
-        function openCamera(photoIndex) {
-            document.getElementById(`photoInputCamera${photoIndex}`).click();
-        }
-
-        for (let i = 1; i <= MAX_PHOTOS; i++) {
-            document.getElementById(`photoInputGallery${i}`).addEventListener('change', function(e) {
-                handlePhotoChange(e, i);
-            });
-            document.getElementById(`photoInputCamera${i}`).addEventListener('change', function(e) {
-                handlePhotoChange(e, i);
-            });
-        }
-
-        function handlePhotoChange(e, photoIndex) {
+        function handlePhotoChange(e, index) {
             const file = e.target.files[0];
             if (!file) return;
 
             if (file.size > MAX_FILE_SIZE) {
-                showAlert('La foto excede el tamaño máximo de 5MB', 'error');
+                alert('La foto excede 5MB');
                 e.target.value = '';
                 return;
             }
 
-            if (!file.type.match('image/jpeg') && !file.type.match('image/png') && !file.type.match('image/jpg')) {
-                showAlert('Solo se permiten archivos JPG o PNG', 'error');
-                e.target.value = '';
-                return;
-            }
-
-            photoFiles[photoIndex - 1] = file;
-
+            photoFiles[index - 1] = file;
             const reader = new FileReader();
             reader.onload = function(event) {
-                const preview = document.getElementById(`photoPreview${photoIndex}`);
-                preview.innerHTML = `
+                document.getElementById(`photoPreview${index}`).innerHTML = `
                     <div class="photo-preview-item">
-                        <img src="${event.target.result}" alt="Foto ${photoIndex}">
-                        <button type="button" class="photo-remove" onclick="removePhoto(${photoIndex})">×</button>
-                    </div>
-                `;
+                        <img src="${event.target.result}">
+                        <button type="button" class="photo-remove" onclick="removePhoto(${index})">×</button>
+                    </div>`;
             };
             reader.readAsDataURL(file);
-
             updatePhotoCounter();
         }
 
-        function removePhoto(photoIndex) {
-            photoFiles[photoIndex - 1] = null;
-            document.getElementById(`photoInputGallery${photoIndex}`).value = '';
-            document.getElementById(`photoInputCamera${photoIndex}`).value = '';
-            document.getElementById(`photoPreview${photoIndex}`).innerHTML = '';
+        function removePhoto(index) {
+            photoFiles[index - 1] = null;
+            document.getElementById(`photoInputGallery${index}`).value = '';
+            document.getElementById(`photoInputCamera${index}`).value = '';
+            document.getElementById(`photoPreview${index}`).innerHTML = '';
             updatePhotoCounter();
         }
 
         function updatePhotoCounter() {
-            const count = photoFiles.filter(f => f !== null).length;
-            document.getElementById('photoCounter').textContent = `${count} / ${MAX_PHOTOS} fotos`;
+            document.getElementById('photoCounter').textContent = `${photoFiles.filter(f => f).length} / ${MAX_PHOTOS} fotos`;
         }
 
         function resetForm() {
-            if (!confirm('¿Seguro que quieres limpiar el formulario?')) return;
-            
+            if (!confirm('¿Limpiar formulario?')) return;
             document.getElementById('registroForm').reset();
-            
-            for (let i = 1; i <= MAX_PHOTOS; i++) {
-                removePhoto(i);
-            }
-            
+            photoFiles = [null, null, null, null, null];
+            for (let i = 1; i <= MAX_PHOTOS; i++) document.getElementById(`photoPreview${i}`).innerHTML = '';
             document.getElementById('ejecutorOtro').style.display = 'none';
-            hideAlert();
-            hideProgress();
-        }
-
-        function showAlert(message, type) {
-            const alertBox = document.getElementById('alertBox');
-            alertBox.className = 'alert alert-' + type;
-            alertBox.textContent = message;
-            alertBox.style.display = 'block';
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function hideAlert() {
+            updatePhotoCounter();
             document.getElementById('alertBox').style.display = 'none';
-        }
-
-        function showProgress() {
-            document.getElementById('progressContainer').classList.add('show');
-            resetProgressSteps();
-        }
-
-        function hideProgress() {
             document.getElementById('progressContainer').classList.remove('show');
         }
 
-        function resetProgressSteps() {
-            for (let i = 1; i <= 4; i++) {
-                const step = document.getElementById(`step${i}`);
-                step.className = 'progress-step';
-                step.querySelector('.progress-icon').innerHTML = ['⏳', '📤', '💾', '✅'][i-1];
-            }
+        function showAlert(msg, type) {
+            const el = document.getElementById('alertBox');
+            el.textContent = msg;
+            el.className = `alert alert-${type}`;
+            el.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function updateProgressStep(stepNumber, status) {
-            const step = document.getElementById(`step${stepNumber}`);
-            const icon = step.querySelector('.progress-icon');
-            
-            step.className = `progress-step ${status}`;
-            
-            if (status === 'active') {
-                icon.innerHTML = '<div class="spinner-small"></div>';
-            } else if (status === 'completed') {
-                icon.innerHTML = '✅';
-            } else if (status === 'error') {
-                icon.innerHTML = '❌';
-            }
-        }
-
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result.split(',')[1]);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
+        function updateProgress(step, status) {
+            const el = document.getElementById(`step${step}`);
+            el.className = `progress-step ${status}`;
+            if (status === 'active') el.querySelector('.progress-icon').innerHTML = '<div class="spinner-small"></div>';
+            else if (status === 'completed') el.querySelector('.progress-icon').innerHTML = '✅';
+            else if (status === 'error') el.querySelector('.progress-icon').innerHTML = '❌';
         }
 
         async function submitForm() {
-            hideAlert();
-
-            if (!photoFiles[0]) {
-                showAlert('Debes subir al menos la Foto 1', 'error');
-                return;
+            document.getElementById('alertBox').style.display = 'none';
+            if (!photoFiles[0]) return showAlert('Falta la Foto 1', 'error');
+            
+            const ejecutorVal = document.getElementById('ejecutorSelect').value;
+            const ejecutor = ejecutorVal === 'OTRO' ? document.getElementById('ejecutorOtro').value : ejecutorVal;
+            
+            if (!ejecutor || !document.getElementById('canal').value || !document.getElementById('numeroVenta').value) {
+                return showAlert('Faltan campos obligatorios', 'error');
             }
 
-            const ejecutorSelect = document.getElementById('ejecutorSelect').value;
-            let ejecutor;
-            if (ejecutorSelect === 'OTRO') {
-                ejecutor = document.getElementById('ejecutorOtro').value.trim();
-                if (!ejecutor) {
-                    showAlert('Debes escribir el nombre del ejecutor', 'error');
-                    return;
-                }
-            } else if (!ejecutorSelect) {
-                showAlert('Debes seleccionar un ejecutor', 'error');
-                return;
-            } else {
-                ejecutor = ejecutorSelect;
-            }
-
-            const canal = document.getElementById('canal').value;
-            const numeroVenta = document.getElementById('numeroVenta').value;
-            const destinatario = document.getElementById('destinatario').value;
-            const direccion = document.getElementById('direccion').value;
-            const comuna = document.getElementById('comuna').value;
-            const comentarios = document.getElementById('comentarios').value.trim();
-
-            if (!canal || !numeroVenta || !destinatario || !direccion || !comuna) {
-                showAlert('Todos los campos marcados con * son obligatorios', 'error');
-                return;
-            }
-
-            const now = new Date();
-            const fecha = now.toLocaleString('es-CL', { 
-                timeZone: 'America/Santiago',
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            });
-
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('progressContainer').classList.add('show');
+            
             try {
-                showProgress();
-                document.getElementById('submitBtn').disabled = true;
-
-                // Paso 1: Preparando datos
-                updateProgressStep(1, 'active');
-                await new Promise(resolve => setTimeout(resolve, 500));
-
+                // Paso 1
+                updateProgress(1, 'active');
+                await new Promise(r => setTimeout(r, 500));
+                
                 const fotosBase64 = [];
-                for (let i = 0; i < MAX_PHOTOS; i++) {
-                    if (photoFiles[i]) {
-                        const base64 = await fileToBase64(photoFiles[i]);
-                        fotosBase64.push({
-                            name: photoFiles[i].name,
-                            data: base64,
-                            mimeType: photoFiles[i].type
+                for (const file of photoFiles) {
+                    if (file) {
+                        const b64 = await new Promise(resolve => {
+                            const reader = new FileReader();
+                            reader.onload = () => resolve(reader.result.split(',')[1]);
+                            reader.readAsDataURL(file);
                         });
+                        fotosBase64.push({ data: b64, mimeType: file.type });
                     }
                 }
+                updateProgress(1, 'completed');
 
-                updateProgressStep(1, 'completed');
+                // Paso 2 y 3 (Envío)
+                updateProgress(2, 'active');
+                updateProgress(3, 'active');
 
-                // Paso 2: Subiendo fotos
-                updateProgressStep(2, 'active');
-                await new Promise(resolve => setTimeout(resolve, 800));
-                updateProgressStep(2, 'completed');
-
-                // Paso 3: Guardando en sistema
-                updateProgressStep(3, 'active');
-
-                const formData = {
-                    fecha: fecha,
+                const data = {
+                    fecha: new Date().toLocaleString('es-CL'),
                     ejecutor: ejecutor,
-                    canal: canal,
-                    numeroVenta: numeroVenta,
-                    destinatario: destinatario,
-                    direccion: direccion,
-                    comuna: comuna,
-                    comentarios: comentarios,
+                    canal: document.getElementById('canal').value,
+                    numeroVenta: document.getElementById('numeroVenta').value,
+                    destinatario: document.getElementById('destinatario').value,
+                    direccion: document.getElementById('direccion').value,
+                    comuna: document.getElementById('comuna').value,
+                    comentarios: document.getElementById('comentarios').value,
                     fotos: fotosBase64
                 };
 
+                // ⚠️ AQUÍ ESTÁ EL TRUCO PARA CORS: text/plain
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(data)
                 });
 
                 const result = await response.json();
-
-                updateProgressStep(3, 'completed');
-
-                // Paso 4: Completado
-                updateProgressStep(4, 'active');
-                await new Promise(resolve => setTimeout(resolve, 500));
-                updateProgressStep(4, 'completed');
-
-                await new Promise(resolve => setTimeout(resolve, 800));
-
-                if (result.isDuplicate) {
-                    showAlert('⚠️ ADVERTENCIA: Este N° de Venta ya existe. Se ha guardado marcado como duplicado.', 'warning');
-                } else {
-                    showAlert('✅ Registro guardado exitosamente', 'success');
-                }
                 
+                updateProgress(2, 'completed');
+                updateProgress(3, 'completed');
+                updateProgress(4, 'completed');
+
+                if (!result.success) throw new Error(result.message);
+
+                showAlert(result.message, result.isDuplicate ? 'warning' : 'success');
                 setTimeout(() => {
-                    hideProgress();
                     resetForm();
+                    document.getElementById('submitBtn').disabled = false;
                 }, 2000);
 
             } catch (error) {
-                console.error('Error:', error);
-                updateProgressStep(3, 'error');
-                showAlert('❌ Error al guardar. Por favor intenta nuevamente.', 'error');
-            } finally {
+                console.error(error);
+                updateProgress(3, 'error');
+                showAlert('Error: ' + error.message, 'error');
                 document.getElementById('submitBtn').disabled = false;
             }
         }
