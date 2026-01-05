@@ -383,6 +383,11 @@
                     <input type="text" id="comuna" required placeholder="Comuna de entrega">
                 </div>
 
+                <div class="form-group">
+                    <label for="comentarios">Comentarios</label>
+                    <textarea id="comentarios" placeholder="Comentarios adicionales sobre el envío (opcional)" rows="3"></textarea>
+                </div>
+
                 <div class="photo-section">
                     <label class="photo-label">📷 Fotos del Envío <span class="required">*</span></label>
                     <p style="font-size: 12px; color: #666; margin-bottom: 15px;">Mínimo 1 foto, máximo 5 fotos. Usa la cámara o selecciona desde galería.</p>
@@ -392,7 +397,7 @@
                             <span>📷</span>
                             <span>Foto 1 (Requerida)</span>
                         </button>
-                        <input type="file" id="photoInput1" class="photo-input" accept="image/*" capture="environment">
+                        <input type="file" id="photoInput1" class="photo-input" accept="image/*">
                         <div id="photoPreview1"></div>
                     </div>
 
@@ -401,7 +406,7 @@
                             <span>📷</span>
                             <span>Foto 2 (Opcional)</span>
                         </button>
-                        <input type="file" id="photoInput2" class="photo-input" accept="image/*" capture="environment">
+                        <input type="file" id="photoInput2" class="photo-input" accept="image/*">
                         <div id="photoPreview2"></div>
                     </div>
 
@@ -410,7 +415,7 @@
                             <span>📷</span>
                             <span>Foto 3 (Opcional)</span>
                         </button>
-                        <input type="file" id="photoInput3" class="photo-input" accept="image/*" capture="environment">
+                        <input type="file" id="photoInput3" class="photo-input" accept="image/*">
                         <div id="photoPreview3"></div>
                     </div>
 
@@ -419,7 +424,7 @@
                             <span>📷</span>
                             <span>Foto 4 (Opcional)</span>
                         </button>
-                        <input type="file" id="photoInput4" class="photo-input" accept="image/*" capture="environment">
+                        <input type="file" id="photoInput4" class="photo-input" accept="image/*">
                         <div id="photoPreview4"></div>
                     </div>
 
@@ -428,7 +433,7 @@
                             <span>📷</span>
                             <span>Foto 5 (Opcional)</span>
                         </button>
-                        <input type="file" id="photoInput5" class="photo-input" accept="image/*" capture="environment">
+                        <input type="file" id="photoInput5" class="photo-input" accept="image/*">
                         <div id="photoPreview5"></div>
                     </div>
 
@@ -591,6 +596,7 @@
             const destinatario = document.getElementById('destinatario').value;
             const direccion = document.getElementById('direccion').value;
             const comuna = document.getElementById('comuna').value;
+            const comentarios = document.getElementById('comentarios').value.trim();
 
             if (!canal || !numeroVenta || !destinatario || !direccion || !comuna) {
                 showAlert('Todos los campos son obligatorios', 'error');
@@ -633,6 +639,7 @@
                     destinatario: destinatario,
                     direccion: direccion,
                     comuna: comuna,
+                    comentarios: comentarios,
                     fotos: fotosBase64
                 };
 
