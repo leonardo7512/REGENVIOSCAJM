@@ -125,20 +125,26 @@
             margin-bottom: 15px;
         }
 
+        .photo-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
         .photo-btn {
-            width: 100%;
-            padding: 15px;
+            flex: 1;
+            padding: 12px;
             background: white;
-            border: 2px dashed #667eea;
+            border: 2px solid #667eea;
             border-radius: 8px;
             color: #667eea;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             transition: all 0.3s;
         }
 
@@ -146,7 +152,7 @@
             transform: scale(0.98);
         }
 
-        .photo-btn.has-photo {
+        .photo-btn.selected {
             background: #e8f5e9;
             border-color: #4caf50;
             color: #2e7d32;
@@ -277,20 +283,66 @@
             border: 1px solid #f5c6cb;
         }
 
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 20px;
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
         }
 
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
+        .progress-container {
+            display: none;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .progress-container.show {
+            display: block;
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            background: #f8f9fa;
+        }
+
+        .progress-step.active {
+            background: #e3f2fd;
+        }
+
+        .progress-step.completed {
+            background: #e8f5e9;
+        }
+
+        .progress-step.error {
+            background: #ffebee;
+        }
+
+        .progress-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+
+        .progress-text {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .spinner-small {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 18px;
+            height: 18px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 10px;
         }
 
         @keyframes spin {
@@ -335,9 +387,24 @@
 
         <div class="form-container">
             <div id="alertBox" class="alert"></div>
-            <div id="loadingBox" class="loading">
-                <div class="spinner"></div>
-                <p>Guardando registro...</p>
+            
+            <div id="progressContainer" class="progress-container">
+                <div id="step1" class="progress-step">
+                    <div class="progress-icon">⏳</div>
+                    <div class="progress-text">Preparando datos...</div>
+                </div>
+                <div id="step2" class="progress-step">
+                    <div class="progress-icon">📤</div>
+                    <div class="progress-text">Subiendo fotos...</div>
+                </div>
+                <div id="step3" class="progress-step">
+                    <div class="progress-icon">💾</div>
+                    <div class="progress-text">Guardando en sistema...</div>
+                </div>
+                <div id="step4" class="progress-step">
+                    <div class="progress-icon">✅</div>
+                    <div class="progress-text">Completado</div>
+                </div>
             </div>
 
             <div class="info-box">
@@ -390,50 +457,95 @@
 
                 <div class="photo-section">
                     <label class="photo-label">📷 Fotos del Envío <span class="required">*</span></label>
-                    <p style="font-size: 12px; color: #666; margin-bottom: 15px;">Mínimo 1 foto, máximo 5 fotos. Usa la cámara o selecciona desde galería.</p>
+                    <p style="font-size: 12px; color: #666; margin-bottom: 15px;">Mínimo 1 foto, máximo 5 fotos.</p>
                     
+                    <!-- Foto 1 -->
                     <div class="photo-input-wrapper">
-                        <button type="button" class="photo-btn" id="photoBtn1" onclick="document.getElementById('photoInput1').click()">
-                            <span>📷</span>
-                            <span>Foto 1 (Requerida)</span>
-                        </button>
-                        <input type="file" id="photoInput1" class="photo-input" accept="image/*">
+                        <label style="font-size: 13px; margin-bottom: 8px;">Foto 1 (Requerida)</label>
+                        <div class="photo-buttons">
+                            <button type="button" class="photo-btn" onclick="openGallery(1)">
+                                <span>🖼️</span>
+                                <span>Galería</span>
+                            </button>
+                            <button type="button" class="photo-btn" onclick="openCamera(1)">
+                                <span>📷</span>
+                                <span>Cámara</span>
+                            </button>
+                        </div>
+                        <input type="file" id="photoInputGallery1" class="photo-input" accept="image/*">
+                        <input type="file" id="photoInputCamera1" class="photo-input" accept="image/*" capture="environment">
                         <div id="photoPreview1"></div>
                     </div>
 
+                    <!-- Foto 2 -->
                     <div class="photo-input-wrapper">
-                        <button type="button" class="photo-btn" id="photoBtn2" onclick="document.getElementById('photoInput2').click()">
-                            <span>📷</span>
-                            <span>Foto 2 (Opcional)</span>
-                        </button>
-                        <input type="file" id="photoInput2" class="photo-input" accept="image/*">
+                        <label style="font-size: 13px; margin-bottom: 8px;">Foto 2 (Opcional)</label>
+                        <div class="photo-buttons">
+                            <button type="button" class="photo-btn" onclick="openGallery(2)">
+                                <span>🖼️</span>
+                                <span>Galería</span>
+                            </button>
+                            <button type="button" class="photo-btn" onclick="openCamera(2)">
+                                <span>📷</span>
+                                <span>Cámara</span>
+                            </button>
+                        </div>
+                        <input type="file" id="photoInputGallery2" class="photo-input" accept="image/*">
+                        <input type="file" id="photoInputCamera2" class="photo-input" accept="image/*" capture="environment">
                         <div id="photoPreview2"></div>
                     </div>
 
+                    <!-- Foto 3 -->
                     <div class="photo-input-wrapper">
-                        <button type="button" class="photo-btn" id="photoBtn3" onclick="document.getElementById('photoInput3').click()">
-                            <span>📷</span>
-                            <span>Foto 3 (Opcional)</span>
-                        </button>
-                        <input type="file" id="photoInput3" class="photo-input" accept="image/*">
+                        <label style="font-size: 13px; margin-bottom: 8px;">Foto 3 (Opcional)</label>
+                        <div class="photo-buttons">
+                            <button type="button" class="photo-btn" onclick="openGallery(3)">
+                                <span>🖼️</span>
+                                <span>Galería</span>
+                            </button>
+                            <button type="button" class="photo-btn" onclick="openCamera(3)">
+                                <span>📷</span>
+                                <span>Cámara</span>
+                            </button>
+                        </div>
+                        <input type="file" id="photoInputGallery3" class="photo-input" accept="image/*">
+                        <input type="file" id="photoInputCamera3" class="photo-input" accept="image/*" capture="environment">
                         <div id="photoPreview3"></div>
                     </div>
 
+                    <!-- Foto 4 -->
                     <div class="photo-input-wrapper">
-                        <button type="button" class="photo-btn" id="photoBtn4" onclick="document.getElementById('photoInput4').click()">
-                            <span>📷</span>
-                            <span>Foto 4 (Opcional)</span>
-                        </button>
-                        <input type="file" id="photoInput4" class="photo-input" accept="image/*">
+                        <label style="font-size: 13px; margin-bottom: 8px;">Foto 4 (Opcional)</label>
+                        <div class="photo-buttons">
+                            <button type="button" class="photo-btn" onclick="openGallery(4)">
+                                <span>🖼️</span>
+                                <span>Galería</span>
+                            </button>
+                            <button type="button" class="photo-btn" onclick="openCamera(4)">
+                                <span>📷</span>
+                                <span>Cámara</span>
+                            </button>
+                        </div>
+                        <input type="file" id="photoInputGallery4" class="photo-input" accept="image/*">
+                        <input type="file" id="photoInputCamera4" class="photo-input" accept="image/*" capture="environment">
                         <div id="photoPreview4"></div>
                     </div>
 
+                    <!-- Foto 5 -->
                     <div class="photo-input-wrapper">
-                        <button type="button" class="photo-btn" id="photoBtn5" onclick="document.getElementById('photoInput5').click()">
-                            <span>📷</span>
-                            <span>Foto 5 (Opcional)</span>
-                        </button>
-                        <input type="file" id="photoInput5" class="photo-input" accept="image/*">
+                        <label style="font-size: 13px; margin-bottom: 8px;">Foto 5 (Opcional)</label>
+                        <div class="photo-buttons">
+                            <button type="button" class="photo-btn" onclick="openGallery(5)">
+                                <span>🖼️</span>
+                                <span>Galería</span>
+                            </button>
+                            <button type="button" class="photo-btn" onclick="openCamera(5)">
+                                <span>📷</span>
+                                <span>Cámara</span>
+                            </button>
+                        </div>
+                        <input type="file" id="photoInputGallery5" class="photo-input" accept="image/*">
+                        <input type="file" id="photoInputCamera5" class="photo-input" accept="image/*" capture="environment">
                         <div id="photoPreview5"></div>
                     </div>
 
@@ -467,9 +579,19 @@
             }
         });
 
+        function openGallery(photoIndex) {
+            document.getElementById(`photoInputGallery${photoIndex}`).click();
+        }
+
+        function openCamera(photoIndex) {
+            document.getElementById(`photoInputCamera${photoIndex}`).click();
+        }
+
         for (let i = 1; i <= MAX_PHOTOS; i++) {
-            const input = document.getElementById(`photoInput${i}`);
-            input.addEventListener('change', function(e) {
+            document.getElementById(`photoInputGallery${i}`).addEventListener('change', function(e) {
+                handlePhotoChange(e, i);
+            });
+            document.getElementById(`photoInputCamera${i}`).addEventListener('change', function(e) {
                 handlePhotoChange(e, i);
             });
         }
@@ -501,10 +623,6 @@
                         <button type="button" class="photo-remove" onclick="removePhoto(${photoIndex})">×</button>
                     </div>
                 `;
-
-                const btn = document.getElementById(`photoBtn${photoIndex}`);
-                btn.classList.add('has-photo');
-                btn.innerHTML = `<span>✓</span><span>Foto ${photoIndex} Lista</span>`;
             };
             reader.readAsDataURL(file);
 
@@ -513,14 +631,9 @@
 
         function removePhoto(photoIndex) {
             photoFiles[photoIndex - 1] = null;
-            document.getElementById(`photoInput${photoIndex}`).value = '';
+            document.getElementById(`photoInputGallery${photoIndex}`).value = '';
+            document.getElementById(`photoInputCamera${photoIndex}`).value = '';
             document.getElementById(`photoPreview${photoIndex}`).innerHTML = '';
-            
-            const btn = document.getElementById(`photoBtn${photoIndex}`);
-            btn.classList.remove('has-photo');
-            const label = photoIndex === 1 ? '(Requerida)' : '(Opcional)';
-            btn.innerHTML = `<span>📷</span><span>Foto ${photoIndex} ${label}</span>`;
-
             updatePhotoCounter();
         }
 
@@ -540,6 +653,7 @@
             
             document.getElementById('ejecutorOtro').style.display = 'none';
             hideAlert();
+            hideProgress();
         }
 
         function showAlert(message, type) {
@@ -548,15 +662,43 @@
             alertBox.textContent = message;
             alertBox.style.display = 'block';
             
-            if (type === 'success') {
-                setTimeout(() => hideAlert(), 5000);
-            }
-
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function hideAlert() {
             document.getElementById('alertBox').style.display = 'none';
+        }
+
+        function showProgress() {
+            document.getElementById('progressContainer').classList.add('show');
+            resetProgressSteps();
+        }
+
+        function hideProgress() {
+            document.getElementById('progressContainer').classList.remove('show');
+        }
+
+        function resetProgressSteps() {
+            for (let i = 1; i <= 4; i++) {
+                const step = document.getElementById(`step${i}`);
+                step.className = 'progress-step';
+                step.querySelector('.progress-icon').innerHTML = ['⏳', '📤', '💾', '✅'][i-1];
+            }
+        }
+
+        function updateProgressStep(stepNumber, status) {
+            const step = document.getElementById(`step${stepNumber}`);
+            const icon = step.querySelector('.progress-icon');
+            
+            step.className = `progress-step ${status}`;
+            
+            if (status === 'active') {
+                icon.innerHTML = '<div class="spinner-small"></div>';
+            } else if (status === 'completed') {
+                icon.innerHTML = '✅';
+            } else if (status === 'error') {
+                icon.innerHTML = '❌';
+            }
         }
 
         function fileToBase64(file) {
@@ -599,7 +741,7 @@
             const comentarios = document.getElementById('comentarios').value.trim();
 
             if (!canal || !numeroVenta || !destinatario || !direccion || !comuna) {
-                showAlert('Todos los campos son obligatorios', 'error');
+                showAlert('Todos los campos marcados con * son obligatorios', 'error');
                 return;
             }
 
@@ -616,8 +758,12 @@
             });
 
             try {
-                document.getElementById('loadingBox').style.display = 'block';
+                showProgress();
                 document.getElementById('submitBtn').disabled = true;
+
+                // Paso 1: Preparando datos
+                updateProgressStep(1, 'active');
+                await new Promise(resolve => setTimeout(resolve, 500));
 
                 const fotosBase64 = [];
                 for (let i = 0; i < MAX_PHOTOS; i++) {
@@ -630,6 +776,16 @@
                         });
                     }
                 }
+
+                updateProgressStep(1, 'completed');
+
+                // Paso 2: Subiendo fotos
+                updateProgressStep(2, 'active');
+                await new Promise(resolve => setTimeout(resolve, 800));
+                updateProgressStep(2, 'completed');
+
+                // Paso 3: Guardando en sistema
+                updateProgressStep(3, 'active');
 
                 const formData = {
                     fecha: fecha,
@@ -645,21 +801,39 @@
 
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(formData)
                 });
 
-                showAlert('✅ Registro guardado exitosamente', 'success');
-                resetForm();
+                const result = await response.json();
+
+                updateProgressStep(3, 'completed');
+
+                // Paso 4: Completado
+                updateProgressStep(4, 'active');
+                await new Promise(resolve => setTimeout(resolve, 500));
+                updateProgressStep(4, 'completed');
+
+                await new Promise(resolve => setTimeout(resolve, 800));
+
+                if (result.isDuplicate) {
+                    showAlert('⚠️ ADVERTENCIA: Este N° de Venta ya existe. Se ha guardado marcado como duplicado.', 'warning');
+                } else {
+                    showAlert('✅ Registro guardado exitosamente', 'success');
+                }
+                
+                setTimeout(() => {
+                    hideProgress();
+                    resetForm();
+                }, 2000);
 
             } catch (error) {
                 console.error('Error:', error);
-                showAlert('❌ Error al guardar: ' + error.message, 'error');
+                updateProgressStep(3, 'error');
+                showAlert('❌ Error al guardar. Por favor intenta nuevamente.', 'error');
             } finally {
-                document.getElementById('loadingBox').style.display = 'none';
                 document.getElementById('submitBtn').disabled = false;
             }
         }
